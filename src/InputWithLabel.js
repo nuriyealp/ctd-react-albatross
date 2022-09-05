@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./App.module.css";
 
 function InputWithLabel(props) {
   const inputRef = React.useRef();
@@ -7,8 +8,11 @@ function InputWithLabel(props) {
   });
   return (
     <>
-      <label htmlFor="todoTitle">{props.children}</label>
+      <label className={styles.label} htmlFor="todoTitle">
+        {props.children}
+      </label>
       <input
+        className={styles.input}
         value={props.todoTitle}
         onChange={props.handleTitleChange}
         id="todoTitle"
