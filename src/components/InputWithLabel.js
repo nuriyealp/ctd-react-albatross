@@ -1,5 +1,6 @@
 import React from "react";
-import styles from "./App.module.css";
+import PropTypes from "prop-types";
+import styles from "../App.module.css";
 
 function InputWithLabel(props) {
   const inputRef = React.useRef();
@@ -23,5 +24,10 @@ function InputWithLabel(props) {
     </>
   );
 }
+
+InputWithLabel.propTypes = {
+  todoTitle: PropTypes.string,
+  handleTitleChange: PropTypes.func,
+};
 
 export default InputWithLabel;
