@@ -8,9 +8,16 @@ function App() {
   const [todoList, setTodoList] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
+  const API_BASE = "https://api.airtable.com/v0/";
+  const API_DEFAULT = "/Default";
+  const SORT_FIELD = "sort[0][field]=";
+  const SORT_DIRECTION = "sort[0][direction]=";
+
+  // https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default?sort[0][field]=Title&sort[0][direction]=asc
+
   React.useEffect(() => {
     fetch(
-      `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default`,
+      `${API_BASE}${process.env.REACT_APP_AIRTABLE_BASE_ID}${API_DEFAULT}?${SORT_FIELD}Title&${SORT_DIRECTION}asc`,
       {
         headers: {
           Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
