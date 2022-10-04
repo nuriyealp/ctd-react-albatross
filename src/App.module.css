@@ -1,0 +1,90 @@
+body {
+  font-family: "Rubik", sans-serif;
+  max-width: 740px;
+  background: linear-gradient(to left, #ddd6eb, #d2a9e2);
+}
+
+.container {
+  height: 100%;
+  padding: 30px;
+  color: #222222;
+}
+
+.headlinePrimary {
+  font-size: 50px;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+
+.title {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #171212;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button {
+  background: transparent;
+  border: 1px solid #171212;
+  padding: 5px;
+  cursor: pointer;
+
+  transition: all 0.1s ease-in;
+}
+
+.button:hover {
+  background: #171212;
+  color: #ffffff;
+}
+
+.buttonFlexOne {
+  flex: 1;
+}
+
+.form {
+  padding: 10px 0 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.label {
+  width: 80px;
+  font-size: 24px;
+}
+
+.input {
+  flex: 2;
+  margin-right: 24px;
+  background: transparent;
+  border: 1px solid #171212;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+
+ul {
+  padding-left: 0;
+}
+
+@media screen and (max-width: 380px) {
+  .form {
+    flex-direction: column;
+  }
+  .headlinePrimary {
+    font-size: 32px;
+  }
+  .item {
+    align-items: flex-start;
+  }
+  .input {
+    margin-right: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+}
