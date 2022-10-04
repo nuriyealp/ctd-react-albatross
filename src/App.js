@@ -4,9 +4,10 @@ import TodoList from "./components/TodoList";
 
 import styles from "./App.module.css";
 
-function App() {
+const App = () => {
   const [todoList, setTodoList] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [sortDirection, setSortDirection] = React.useState("asc");
 
   const API_BASE = "https://api.airtable.com/v0/";
   const API_DEFAULT = "/Default";
@@ -17,7 +18,7 @@ function App() {
 
   React.useEffect(() => {
     fetch(
-      `${API_BASE}${process.env.REACT_APP_AIRTABLE_BASE_ID}${API_DEFAULT}?${SORT_FIELD}Title&${SORT_DIRECTION}asc`,
+      `${API_BASE}${process.env.REACT_APP_AIRTABLE_BASE_ID}${API_DEFAULT}?${SORT_FIELD}Title&${SORT_DIRECTION}${sortDirection}`,
       {
         headers: {
           Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
@@ -29,24 +30,62 @@ function App() {
         setTodoList(result.records);
         setIsLoading(false);
       });
-  }, []);
-
-  React.useEffect(() => {
-    if (isLoading === false) {
-      localStorage.setItem("savedTodoList", JSON.stringify(todoList));
-    }
-  }, [todoList, isLoading]);
+  }, [sortDirection]);
 
   const addTodo = (newTodo) => {
+    fetch(
+      `${API_BASE}${process.env.REACT_APP_AIRTABLE_BASE_ID}${API_DEFAULT}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ fields: newTodo.fields }),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
     setTodoList([...todoList, newTodo]);
   };
 
   const removeTodo = (id) => {
+    fetch(
+      `${API_BASE}${process.env.REACT_APP_AIRTABLE_BASE_ID}${API_DEFAULT}/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
     const newTodoList = todoList.filter((todo) => id !== todo.id);
     setTodoList(newTodoList);
   };
 
-  console.log(todoList);
+  const handleSortDirection = () => {
+    if (sortDirection === "asc") {
+      setSortDirection("desc");
+    }
+    if (sortDirection === "desc") {
+      setSortDirection("asc");
+    }
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.headlinePrimary}>Todo List</h1>
@@ -55,10 +94,15 @@ function App() {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
+        <TodoList
+          todoList={todoList}
+          onRemoveTodo={removeTodo}
+          sortDirection={sortDirection}
+          handleSortDirection={handleSortDirection}
+        />
       )}
     </div>
   );
-}
+};
 
 export default App;

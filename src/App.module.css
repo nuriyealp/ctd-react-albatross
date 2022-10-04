@@ -16,6 +16,14 @@ body {
   letter-spacing: 3px;
 }
 
+.title {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #171212;
+  cursor: pointer;
+  font-size: 16px;
+}
+
 .button {
   background: transparent;
   border: 1px solid #171212;
@@ -47,6 +55,9 @@ body {
 
 .input {
   flex: 2;
+  margin-right: 24px;
+  background: transparent;
+  border: 1px solid #171212;
 }
 
 .item {
@@ -68,7 +79,12 @@ ul {
     font-size: 32px;
   }
   .item {
-    flex-direction: column;
     align-items: flex-start;
+  }
+  .input {
+    margin-right: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 20px;
   }
 }
